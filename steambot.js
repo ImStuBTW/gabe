@@ -15,29 +15,29 @@ module.exports = function (req, res, next) {
       return res.status(200).send({'text': 'Please Input A Game Title'});
   }
   else {
-      botPayLoad = steam.find(req.body.text);
+      botPayLoad = steam.find(req.body.text).then(function() {
+          // write response message and add to payload
+          botPayload.username = 'Gabe';
+          botPayload.channel = req.body.channel_id;
+          botPayload.response_type = 'in_channel';
+          botPayload.icon_emoji = ':video_game:';
+          botPayload.response_url = req.body.response_url;
+
+          // send game info
+          send(botPayload, function (error, status, body) {
+            if (error) {
+              return next(error);
+
+            } else if (status !== 200) {
+              // inform user that our Incoming WebHook failed
+              return next(new Error('Incoming WebHook: ' + status + ' ' + body));
+
+            } else {
+              return res.status(200).end();
+            }
+          });
+      });
   }
-
-  // write response message and add to payload
-  botPayload.username = 'Gabe';
-  botPayload.channel = req.body.channel_id;
-  botPayload.response_type = 'in_channel';
-  botPayload.icon_emoji = ':video_game:';
-  botPayload.response_url = req.body.response_url;
-
-  // send game info
-  send(botPayload, function (error, status, body) {
-    if (error) {
-      return next(error);
-
-    } else if (status !== 200) {
-      // inform user that our Incoming WebHook failed
-      return next(new Error('Incoming WebHook: ' + status + ' ' + body));
-
-    } else {
-      return res.status(200).end();
-    }
-  });
 }
 
 
