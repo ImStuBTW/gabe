@@ -9,35 +9,30 @@ module.exports = function (req, res, next) {
       "response_type" : "in_channel"
   };
 
-  res.status(200).send(immediateResponse);
+  res.status(200).send(immediateResponse).end();
 
-  if (!req.body.text) {
-      return res.status(200).send({'text': 'Please Input A Game Title'});
-  }
-  else {
-      botPayLoad = steam.find(req.body.text).then(function() {
-          // write response message and add to payload
-          botPayload.username = 'Gabe';
-          botPayload.channel = req.body.channel_id;
-          botPayload.response_type = 'in_channel';
-          botPayload.icon_emoji = ':video_game:';
-          botPayload.response_url = req.body.response_url;
+  botPayLoad = steam.find(req.body.text).then(function() {
+      // write response message and add to payload
+      botPayload.username = 'Gabe';
+      botPayload.channel = req.body.channel_id;
+      botPayload.response_type = 'in_channel';
+      botPayload.icon_emoji = ':video_game:';
+      botPayload.response_url = req.body.response_url;
+      console.log(botPayLoad);
+      // send game info
+      send(botPayload, function (error, status, body) {
+        if (error) {
+          return next(error);
 
-          // send game info
-          send(botPayload, function (error, status, body) {
-            if (error) {
-              return next(error);
+        } else if (status !== 200) {
+          // inform user that our Incoming WebHook failed
+          return next(new Error('Incoming WebHook: ' + status + ' ' + body));
 
-            } else if (status !== 200) {
-              // inform user that our Incoming WebHook failed
-              return next(new Error('Incoming WebHook: ' + status + ' ' + body));
-
-            } else {
-              return res.status(200).end();
-            }
-          });
+        } else {
+          return res.status(200).end();
+        }
       });
-  }
+  });
 }
 
 
