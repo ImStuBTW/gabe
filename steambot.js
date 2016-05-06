@@ -9,8 +9,7 @@ module.exports = function (req, res, next) {
       "response_type" : "in_channel"
   };
 
-  send(immediateResponse, function (error, status, body) {
-  });
+  res.status(200).send(immediateResponse);
 
   /*if (!req.body.text) {
       return res.status(200).send('Please Input A Game Title');
