@@ -11,39 +11,9 @@ module.exports = function (req, res, next) {
 
   res.status(200).send(immediateResponse);
 
-  steam.find(req.body.text).then(function() {
+  steam.find(req.body.text).then(function(steamPayload) {
       // write response message and add to payload
-      botPayload.text = "Hey " + userName + "! Here's what I could find about <http://store.steampowered.com/app/413150|Stardew Valley> on Steam.";
-      botPayload.unfurl_links = false;
-      botPayload.attachments = [
-          {
-              "fallback": "Here's what I could find about Stardew Valley on Steam. It's $14.99 and can be found here: http://store.steampowered.com/app/413150",
-              "color": "#818182",
-              "fields": [
-                  {
-                      "title": "Price",
-                      "value": "$14.99 (0% Off)",
-                      "short": true
-                  },
-                  {
-                      "title": "Release Date",
-                      "value": "Feb 26, 2016",
-                      "short": true
-                  },
-                  {
-                      "title": "Genres",
-                      "value": "Indie, RPG, Simulation",
-                      "short": true
-                  },
-                  {
-                      "title": "Platforms",
-                      "value": "PC, Mac",
-                      "short": true
-                  }
-              ],
-              "image_url": "https://steamcdn-a.akamaihd.net/steam/apps/256660296/movie.293x165.jpg"
-          }
-      ];
+      botPayload = steamPayload;
       botPayload.username = 'Gabe';
       botPayload.channel = req.body.channel_id;
       botPayload.response_type = 'in_channel';
