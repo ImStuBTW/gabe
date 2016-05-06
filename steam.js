@@ -49,10 +49,18 @@ module.exports.find = function(searchPattern) {
                 };
             }
             else {
-                var slackMessage = {
-                    "text": "Sorry, I couldn't find any games matching: " + searchPattern,
-                    "unfurl_links": false,
-                };
+                if(searchPattern.toLowerCase() === 'help') {
+                        var slackMessage = {
+                            "text": "Howdy! I'm Gabe, the Steam searching slack bot.\nTo use me, just type '/steam' and then the exact name of a game title.",
+                            "unfurl_links": false,
+                        };
+                }
+                else {
+                    var slackMessage = {
+                        "text": "Sorry, I couldn't find any games matching: " + searchPattern,
+                        "unfurl_links": false,
+                    };
+                }
             }
             console.log('Done Find Export For: ' + searchPattern);
             resolve(slackMessage);
