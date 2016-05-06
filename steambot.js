@@ -2,6 +2,7 @@ var request = require('request');
 var steam = require('./steam');
 
 module.exports = function (req, res, next) {
+  var userName = req.body.user_name;
   var botPayload = {};
 
   /*if (!req.body.text) {
@@ -9,7 +10,7 @@ module.exports = function (req, res, next) {
   }*/
 
   // write response message and add to payload
-  botPayload.text = "Here's what I could find about <http://store.steampowered.com/app/413150|Stardew Valley> on Steam.";
+  botPayload.text = "Hey " + userName + "! Here's what I could find about <http://store.steampowered.com/app/413150|Stardew Valley> on Steam.";
   botPayload.unfurl_links = false;
   botPayload.attachments = [
       {
@@ -42,6 +43,7 @@ module.exports = function (req, res, next) {
   ];
   botPayload.username = 'Gabe';
   botPayload.channel = req.body.channel_id;
+  botPayload.response_type = 'in_channel';
   botPayload.icon_emoji = ':video_game:';
 
   // send game info
