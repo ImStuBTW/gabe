@@ -1,0 +1,6 @@
+scripts/
+test/
+src/
+.babelrc
+.gitignore
+.env
