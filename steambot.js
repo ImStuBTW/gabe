@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
       "response_type" : "in_channel"
   };
 
-  res.status(200).send(immediateResponse).end();
+  res.status(200).send(immediateResponse);
 
   botPayLoad = steam.find(req.body.text).then(function() {
       // write response message and add to payload
