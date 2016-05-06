@@ -5,6 +5,13 @@ module.exports = function (req, res, next) {
   var userName = req.body.user_name;
   var botPayload = {};
 
+  var immediateResponse = {
+      "response_type" : "in_channel"
+  };
+
+  send(immediateResponse, function (error, status, body) {
+  });
+
   /*if (!req.body.text) {
       return res.status(200).send('Please Input A Game Title');
   }*/
@@ -45,6 +52,7 @@ module.exports = function (req, res, next) {
   botPayload.channel = req.body.channel_id;
   botPayload.response_type = 'in_channel';
   botPayload.icon_emoji = ':video_game:';
+  botPayload.response_url = req.body.response_url;
 
   // send game info
   send(botPayload, function (error, status, body) {
