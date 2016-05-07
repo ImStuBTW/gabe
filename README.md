@@ -1,6 +1,6 @@
 # Gabe, a Steam Slack Bot
 
-![Preview](https://raw.githubusercontent.com/ImStuartJones/gabe/master/Preview.png)
+![Preview](https://raw.githubusercontent.com/ImStuartJones/gabe/master/screenshot.png)
 
 Gabe is a simple Slack bot for searching the Steam storefront. When a user inputs the '/steam' command along with a game title, Gabe will reply with a brief summary of the game, along with a link to the game's Steam page.
 
